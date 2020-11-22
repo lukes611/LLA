@@ -92,7 +92,7 @@ export class LV2 {
 	// o: { x: number, y: number }
 	// return: number
 	dot(o) {
-		return this.x * o.y + this.y * o.x;
+		return this.x * o.x + this.y * o.y;
 	}
 	
 	// o: { x: number, y: number }
@@ -509,6 +509,14 @@ export class LMat3 {
 		var cosine = Math.cos(angle);
 		var sinus = Math.sin(angle);
 		return new LMat3([cosine, -sinue, 0, sinus, cosine, 0, 0, 0, 1]);
+	}
+
+	/**
+	 * @param {Array<LMat3>} mats 
+	 * @returns {LMat3}
+	 */
+	static buildMatrix(mats = []) {
+		return mats.reduce((p,c) => p.mult(c), LMat3.identity());
 	}
 }
 
