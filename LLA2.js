@@ -115,105 +115,77 @@ export class LV3 {
     toString() {
         return `${this.x},${this.y},${this.z}`;
     }
-    // return: LV3
     copy() {
         return new LV3(this.x, this.y, this.z);
     }
-    // o: LV3
     setAs(o) {
         this.x = o.x;
         this.y = o.y;
         this.z = o.z;
     }
-    // x: number
-    // y: number
-    // z: number
     setValues(x, y, z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
-    // o: LV3
-    // return: LV3
     add(o) {
         return new LV3(this.x + o.x, this.y + o.y, this.z + o.z);
     }
-    // o: LV3
     iadd(o) {
         this.x += o.x;
         this.y += o.y;
         this.z += o.z;
     }
-    // o: LV3
-    // return: LV3
     sub(o) {
         return new LV3(this.x - o.x, this.y - o.y, this.z - o.z);
     }
-    // o: LV3
     isub(o) {
         this.x -= o.x;
         this.y -= o.y;
         this.z -= o.z;
     }
-    // s: number
-    // return: LV3
     scale(s) {
         return new LV3(this.x * s, this.y * s, this.z * s);
     }
-    // s: number
-    // return: LV3
     iscale(s) {
         this.x *= s;
         this.y *= s;
         this.z *= s;
     }
-    // s: number
-    // return: LV3
     div(s) {
         return new LV3(this.x / s, this.y / s, this.z / s);
     }
-    // s: number
     idiv(s) {
         this.x /= s;
         this.y /= s;
         this.z /= s;
     }
-    // o: LV3
-    // return: number
     dot(o) {
         return this.x * o.x + this.y * o.y + this.z * o.z;
     }
-    // o: LV3
-    // return: LV3
     cross(o) {
         return new LV3(this.y * o.z - this.z * o.y, this.z * o.x - this.x * o.z, this.x * o.y - this.y * o.x);
     }
-    // o: LV3
     icross(o) {
-        var x = this.x;
-        var y = this.y;
-        var z = this.z;
+        const x = this.x;
+        const y = this.y;
+        const z = this.z;
         this.x = y * o.z - z * o.y;
         this.y = z * o.x - x * o.z;
         this.z = x * o.y - y * o.x;
     }
-    // o: LV3
-    // return: number
     dist(o) {
-        var dx = this.x - o.x;
-        var dy = this.y - o.y;
-        var dz = this.z - o.z;
+        const dx = this.x - o.x;
+        const dy = this.y - o.y;
+        const dz = this.z - o.z;
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
-    // return: number
     mag() {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     }
-    // return: LV3
     round() {
         return new LV3(Math.round(this.x), Math.round(this.y), Math.round(this.z));
     }
-    // return: LV3
     floor() {
         return new LV3(Math.floor(this.x), Math.floor(this.y), Math.floor(this.z));
     }
@@ -227,50 +199,33 @@ export class LV3 {
         this.y = Math.floor(this.y);
         this.z = Math.floor(this.z);
     }
-    // return: LV3
     unit() {
-        var m = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        const m = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
         return new LV3(this.x / m, this.y / m, this.z / m);
     }
     iunit() {
-        var m = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        const m = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
         this.x /= m;
         this.y /= m;
         this.z /= m;
     }
 }
 export class LMat3 {
-    // inp?: number[9] 
     constructor(inp) {
-        if (!inp)
-            this.arr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        else
-            this.arr = inp;
+        this.arr = inp || [0, 0, 0, 0, 0, 0, 0, 0, 0];
     }
-    // return: string
     toString() {
-        return '|' + this.arr[0] + ',' + this.arr[1] + ',' + this.arr[2] + '|\n' +
-            '|' + this.arr[3] + ',' + this.arr[4] + ',' + this.arr[5] + '|\n' +
-            '|' + this.arr[6] + ',' + this.arr[7] + ',' + this.arr[8] + '|\n';
+        return `| ${this.arr[0]} ${this.arr[1]} ${this.arr[2]}
+			   '| ${this.arr[3]} ${this.arr[4]} ${this.arr[5]}
+			   '| ${this.arr[6]} ${this.arr[7]} ${this.arr[8]}
+		`;
     }
-    // return: LMat3
     copy() {
         return new LMat3(this.arr.slice());
     }
-    /**
-     * @param {number} row
-     * @param {number} col
-     * @returns {number}
-     */
     at(row, col) {
         return this.arr[row * 3 + col];
     }
-    /**
-     * @param {number} row
-     * @param {number} col
-     * @param {number} val
-     * @returns {number}
-     */
     set(row, col, val) {
         this.arr[row * 3 + col] = val;
     }
@@ -281,7 +236,6 @@ export class LMat3 {
             this.arr[2], this.arr[5], this.arr[8]
         ];
     }
-    // return: LMat3
     transpose() {
         return new LMat3([
             this.arr[0], this.arr[3], this.arr[6],
@@ -289,7 +243,6 @@ export class LMat3 {
             this.arr[2], this.arr[5], this.arr[8]
         ]);
     }
-    // m: LMat3
     imult(m) {
         this.arr = [
             this.arr[0] * m.arr[0] + this.arr[1] * m.arr[3] + this.arr[2] * m.arr[6],
@@ -303,8 +256,6 @@ export class LMat3 {
             this.arr[6] * m.arr[2] + this.arr[7] * m.arr[5] + this.arr[8] * m.arr[8],
         ];
     }
-    // m: LMat3
-    // return: LMat3
     mult(m) {
         return new LMat3([
             this.arr[0] * m.arr[0] + this.arr[1] * m.arr[3] + this.arr[2] * m.arr[6],
@@ -318,118 +269,100 @@ export class LMat3 {
             this.arr[6] * m.arr[2] + this.arr[7] * m.arr[5] + this.arr[8] * m.arr[8],
         ]);
     }
-    // p: LV2
-    // return: LV2
     multLV2(p) {
         return new LV2(p.x * this.arr[0] + p.y * this.arr[1] + 1 * this.arr[2], p.x * this.arr[3] + p.y * this.arr[4] + 1 * this.arr[5]);
     }
-    // p: LV3
-    // return: LV3
     multLV3(p) {
         return new LV3(p.x * this.arr[0] + p.y * this.arr[1] + p.z * this.arr[2], p.x * this.arr[3] + p.y * this.arr[4] + p.z * this.arr[5], p.x * this.arr[6] + p.y * this.arr[7] + p.z * this.arr[8]);
     }
-    /**
-     * @returns {LMat3}
-     */
     inv() {
         return invertSquareMatrix(this);
     }
-    // return: LMat3
     static zero() {
         return new LMat3();
     }
-    // return: LMat3
     static identity() {
         return new LMat3([1, 0, 0, 0, 1, 0, 0, 0, 1]);
     }
-    // scalar: number
-    // return: LMat3
     static scale(scalar) {
-        return new LMat3([scalar, 0, 0, 0, scalar, 0, 0, 0, 1]);
+        return new LMat3([
+            scalar, 0, 0,
+            0, scalar, 0,
+            0, 0, 1,
+        ]);
     }
-    // x: number
-    // y: number
-    // return: LMat3
     static trans(x, y) {
-        return new LMat3([1, 0, x, 0, 1, y, 0, 0, 1]);
+        return new LMat3([
+            1, 0, x,
+            0, 1, y,
+            0, 0, 1,
+        ]);
     }
-    // angle: number
-    // return: LMat3
     static rotate(angle) {
-        angle *= 0.0174533;
-        var cosine = Math.cos(angle);
-        var sinus = Math.sin(angle);
-        return new LMat3([cosine, -sinus, 0, sinus, cosine, 0, 0, 0, 1]);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
+        return new LMat3([
+            cosine, -sinus, 0,
+            sinus, cosine, 0,
+            0, 0, 1,
+        ]);
     }
-    // angle: number
-    // return: LMat3
     static rotateX(angle) {
-        angle *= 0.0174533;
-        var cosine = Math.cos(angle);
-        var sinus = Math.sin(angle);
-        return new LMat3([1, 0, 0, 0, cosine, -sinus, 0, sinus, cosine]);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
+        return new LMat3([
+            1, 0, 0,
+            0, cosine, -sinus,
+            0, sinus, cosine,
+        ]);
     }
-    // angle: number
-    // return: LMat3
     static rotateY(angle) {
-        angle *= 0.0174533;
-        var cosine = Math.cos(angle);
-        var sinus = Math.sin(angle);
-        return new LMat3([cosine, 0, sinus, 0, 1, 0, -sinus, 0, cosine]);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
+        return new LMat3([
+            cosine, 0, sinus,
+            0, 1, 0,
+            -sinus, 0, cosine,
+        ]);
     }
-    // angle: number
-    // return: LMat3
     static rotateZ(angle) {
-        angle *= 0.0174533;
-        var cosine = Math.cos(angle);
-        var sinus = Math.sin(angle);
-        return new LMat3([cosine, -sinue, 0, sinus, cosine, 0, 0, 0, 1]);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
+        return new LMat3([
+            cosine, -sinus, 0,
+            sinus, cosine, 0,
+            0, 0, 1,
+        ]);
     }
-    /**
-     * @param {Array<LMat3>} mats
-     * @returns {LMat3}
-     */
-    static buildMatrix(mats = []) {
-        return mats.reduce((p, c) => p.mult(c), LMat3.identity());
+    static buildMatrix(matrices = []) {
+        return matrices.reduce((p, c) => p.mult(c), LMat3.identity());
     }
 }
 export class LMat4 {
-    // inp?: [number * 16]
-    constructor(inp) {
-        if (inp === undefined) {
-            this.arr = [0, 0, 0, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0];
-        }
-        else
-            this.arr = inp;
+    constructor(inp = []) {
+        this.arr = inp || [
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+        ];
     }
-    // return: string
     toString() {
         return '|' + this.arr[0] + ',' + this.arr[1] + ',' + this.arr[2] + ',' + this.arr[3] + '|\n' +
             '|' + this.arr[4] + ',' + this.arr[5] + ',' + this.arr[6] + ',' + this.arr[7] + '|\n' +
             '|' + this.arr[8] + ',' + this.arr[9] + ',' + this.arr[10] + ',' + this.arr[11] + '|\n' +
             '|' + this.arr[12] + ',' + this.arr[13] + ',' + this.arr[14] + ',' + this.arr[15] + '|\n';
     }
-    // return: LMat4
     copy() {
         return new LMat4(this.arr.slice());
     }
-    /**
-     * @param {number} row
-     * @param {number} col
-     * @returns {number}
-     */
     at(row, col) {
         return this.arr[row * 4 + col];
     }
-    /**
-     * @param {number} row
-     * @param {number} col
-     * @param {number} val
-     * @returns {number}
-     */
     set(row, col, val) {
         this.arr[row * 4 + col] = val;
     }
@@ -441,7 +374,6 @@ export class LMat4 {
             this.arr[3], this.arr[7], this.arr[11], this.arr[15]
         ];
     }
-    // return: LMat4
     transpose() {
         return new LMat4([
             this.arr[0], this.arr[4], this.arr[8], this.arr[12],
@@ -450,7 +382,6 @@ export class LMat4 {
             this.arr[3], this.arr[7], this.arr[11], this.arr[15]
         ]);
     }
-    // m: LMat4
     imult(m) {
         this.arr = [
             this.arr[0] * m.arr[0] + this.arr[1] * m.arr[4] + this.arr[2] * m.arr[8] + this.arr[3] * m.arr[12],
@@ -471,8 +402,6 @@ export class LMat4 {
             this.arr[12] * m.arr[3] + this.arr[13] * m.arr[7] + this.arr[14] * m.arr[11] + this.arr[15] * m.arr[15]
         ];
     }
-    // m: LMat4
-    // return: LMat4
     mult(m) {
         return new LMat4([
             this.arr[0] * m.arr[0] + this.arr[1] * m.arr[4] + this.arr[2] * m.arr[8] + this.arr[3] * m.arr[12],
@@ -493,98 +422,69 @@ export class LMat4 {
             this.arr[12] * m.arr[3] + this.arr[13] * m.arr[7] + this.arr[14] * m.arr[11] + this.arr[15] * m.arr[15]
         ]);
     }
-    // p: LV3
-    // return: LV3
     multLV3(p, w = 1) {
         return new LV3(p.x * this.arr[0] + p.y * this.arr[1] + p.z * this.arr[2] + this.arr[3] * w, p.x * this.arr[4] + p.y * this.arr[5] + p.z * this.arr[6] + this.arr[7] * w, p.x * this.arr[8] + p.y * this.arr[9] + p.z * this.arr[10] + this.arr[11] * w);
     }
-    /**
-     * @returns {LMat4}
-     */
     inv() {
         return invertSquareMatrix(this);
     }
-    // scalar: number
-    // return: LMat4
     static scale(scalar) {
         return new LMat4([scalar, 0, 0, 0,
             0, scalar, 0, 0,
             0, 0, scalar, 0,
             0, 0, 0, 1]);
     }
-    /**
-     * @param {number} xs
-     * @param {number} ys
-     * @param {number} zs
-     * @returns {LMat4}
-     */
     static scaleXYZ(xs, ys, zs) {
         return new LMat4([xs, 0, 0, 0,
             0, ys, 0, 0,
             0, 0, zs, 0,
             0, 0, 0, 1]);
     }
-    // x: number
-    // y: number
-    // z: number
-    // return: LMat4
     static trans(x, y, z) {
         return new LMat4([1, 0, 0, x,
             0, 1, 0, y,
             0, 0, 1, z,
             0, 0, 0, 1]);
     }
-    // angle: number
-    // return: LMat4
     static rotateX(angle) {
-        angle *= 0.0174533;
-        var cosine = Math.cos(angle);
-        var sinus = Math.sin(angle);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
         return new LMat4([1, 0, 0, 0,
             0, cosine, -sinus, 0,
             0, sinus, cosine, 0,
             0, 0, 0, 1
         ]);
     }
-    // angle: number
-    // return: LMat4
     static rotateY(angle) {
-        angle *= 0.0174533;
-        var cosine = Math.cos(angle);
-        var sinus = Math.sin(angle);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
         return new LMat4([cosine, 0, sinus, 0,
             0, 1, 0, 0,
             -sinus, 0, cosine, 0,
             0, 0, 0, 1
         ]);
     }
-    // angle: number
-    // return: LMat4
     static rotateZ(angle) {
-        const rad = angle * 0.0174533;
-        var cosine = Math.cos(rad);
-        var sinus = Math.sin(rad);
+        const radians = angle / Radians2Degrees;
+        const cosine = Math.cos(radians);
+        const sinus = Math.sin(radians);
         return new LMat4([cosine, -sinus, 0, 0,
             sinus, cosine, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1
         ]);
     }
-    // return: LMat4
     static zero() {
         return new LMat4();
     }
-    // return: LMat4
     static identity() {
         return new LMat4([1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1]);
     }
-    /**
-     * @param {Array<LMat4>} mats
-     * @returns {LMat4}
-     */
     static buildMatrix(mats = []) {
         return mats.reduce((p, c) => p.mult(c), LMat4.identity());
     }
@@ -607,17 +507,11 @@ function invertSquareMatrix(mat) {
     const makeArr = () => Array.from({ length: N * N }, () => 0);
     /**
      * @desc Function to get cofactor of A[p][q] in temp[][]. n is current dimension of A[][]
-     * @param {Array<number>} A
-     * @param {number} p
-     * @param {number} q
-     * @param {number} n
-     * @returns {Array<number>}
      */
     const getCofactor = (A, p, q, n) => {
         let i = 0;
         let j = 0;
         let temp = makeArr();
-        // console.log('nnnnnn', n)
         // Looping for each element of the matrix 
         for (let row = 0; row < n; row++) {
             for (let col = 0; col < n; col++) {
@@ -640,9 +534,6 @@ function invertSquareMatrix(mat) {
     };
     /**
      * @desc Recursive function for finding determinant of matrix. n is current dimension of A[][].
-     * @param {Array<number>} A
-     * @param {number} n
-     * @returns {number}
      */
     const getDeterminant = (A, n) => {
         let D = 0; // Initialize result 
@@ -666,8 +557,6 @@ function invertSquareMatrix(mat) {
     };
     /**
      * @desc Function to get adjoint of A[N][N] in adj[N][N].
-     * @param {Array<number>} A
-     * @returns {Array<number>}
      */
     const adjoint = (A) => {
         const adj = makeArr();
@@ -698,8 +587,6 @@ function invertSquareMatrix(mat) {
     };
     /**
      * @desc Function to calculate and store inverse, returns false if matrix is singular
-     * @param {Array<number>} A
-     * @returns {Array<number>}
      */
     const getInverse = (A) => {
         let inverseArr = makeArr();

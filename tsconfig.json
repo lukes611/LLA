@@ -3,6 +3,7 @@
       "target": "es2017",
       "module": "es6",
       "sourceMap": true,
+      "declaration": true
   },
   "files": [
     "LLA2.ts",

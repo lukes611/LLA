@@ -436,18 +436,17 @@ export class LMat3 {
 }
 
 export class LMat4 {
+	arr: number[];
 
-	// inp?: [number * 16]
-	constructor(inp) {
-		if(inp === undefined) {
-			this.arr = [0, 0, 0, 0,
-						0, 0, 0, 0,
-						0, 0, 0, 0,
-						0, 0, 0, 0];
-		} else this.arr = inp;
+	constructor(inp: number[] = []) {
+		this.arr = inp || [
+					0, 0, 0, 0,
+					0, 0, 0, 0,
+					0, 0, 0, 0,
+					0, 0, 0, 0,
+		];
 	}
 	
-	// return: string
 	toString() {
 		return '|' + this.arr[0] + ',' + this.arr[1] + ',' + this.arr[2] + ',' + this.arr[3] + '|\n' + 
 			   '|' + this.arr[4] + ',' + this.arr[5] + ',' + this.arr[6] + ',' + this.arr[7] + '|\n' + 
@@ -455,27 +454,15 @@ export class LMat4 {
 			   '|' + this.arr[12] + ',' + this.arr[13] + ',' + this.arr[14] + ',' + this.arr[15] + '|\n';
 	}
 	
-	// return: LMat4
 	copy() {
 		return new LMat4(this.arr.slice());
 	}
 
-	/**
-	 * @param {number} row
-	 * @param {number} col
-	 * @returns {number}
-	 */
-	at(row, col) {
+	at(row: number, col: number) {
 		return this.arr[row * 4 + col];
 	}
 
-	/**
-	 * @param {number} row
-	 * @param {number} col
-	 * @param {number} val
-	 * @returns {number}
-	 */
-	set(row, col, val) {
+	set(row: number, col: number, val: number) {
 		this.arr[row * 4 + col] = val;
 	}
 	
@@ -488,7 +475,6 @@ export class LMat4 {
 		];
 	}
 	
-	// return: LMat4
 	transpose() {
 		return new LMat4([
 			this.arr[0], this.arr[4], this.arr[8], this.arr[12],
@@ -498,8 +484,7 @@ export class LMat4 {
 		]);
 	}
 	
-	// m: LMat4
-	imult(m) {
+	imult(m: LMat4) {
 		this.arr = [
 			this.arr[0]*m.arr[0] + this.arr[1]*m.arr[4] + this.arr[2]*m.arr[8] + this.arr[3]*m.arr[12],
 			this.arr[0]*m.arr[1] + this.arr[1]*m.arr[5] + this.arr[2]*m.arr[9] + this.arr[3]*m.arr[13],
@@ -524,9 +509,7 @@ export class LMat4 {
 		];
 	}
 	
-	// m: LMat4
-	// return: LMat4
-	mult(m) {
+	mult(m: LMat4) {
 		return new LMat4([
 			this.arr[0]*m.arr[0] + this.arr[1]*m.arr[4] + this.arr[2]*m.arr[8] + this.arr[3]*m.arr[12],
 			this.arr[0]*m.arr[1] + this.arr[1]*m.arr[5] + this.arr[2]*m.arr[9] + this.arr[3]*m.arr[13],
@@ -551,60 +534,41 @@ export class LMat4 {
 		]);
 	}
 	
-	// p: LV3
-	// return: LV3
-	multLV3(p, w = 1) {
+	multLV3(p: LV3, w: number = 1) {
 		return new LV3(p.x * this.arr[0] + p.y * this.arr[1] + p.z * this.arr[2] + this.arr[3] * w,
 					   p.x * this.arr[4] + p.y * this.arr[5] + p.z * this.arr[6] + this.arr[7] * w,
 					   p.x * this.arr[8] + p.y * this.arr[9] + p.z * this.arr[10] + this.arr[11] * w);
 	}
 
-	/**
-	 * @returns {LMat4}
-	 */
 	inv() {
 		return invertSquareMatrix(this);
 	}
 	
-	// scalar: number
-	// return: LMat4
-	static scale(scalar) {
+	static scale(scalar: number) {
 		return new LMat4([scalar, 0, 0, 0, 
 						  0, scalar, 0, 0,
 						  0, 0, scalar, 0,
 						  0, 0, 0, 1]);
 	}
 
-	/**
-	 * @param {number} xs
-	 * @param {number} ys
-	 * @param {number} zs
-	 * @returns {LMat4}
-	 */
-	static scaleXYZ(xs, ys, zs) {
+	static scaleXYZ(xs: number, ys: number, zs: number) {
 		return new LMat4([xs, 0, 0, 0, 
 						  0, ys, 0, 0,
 						  0, 0, zs, 0,
 						  0, 0, 0, 1]);
 	}
 	
-	// x: number
-	// y: number
-	// z: number
-	// return: LMat4
-	static trans(x, y, z) {
+	static trans(x: number, y: number, z: number) {
 		return new LMat4([1, 0, 0, x,
 						  0, 1, 0, y,
 						  0, 0, 1, z,
 						  0, 0, 0, 1]);
 	}
 	
-	// angle: number
-	// return: LMat4
-	static rotateX(angle) {
-		angle *= 0.0174533;
-		var cosine = Math.cos(angle);
-		var sinus = Math.sin(angle);
+	static rotateX(angle: number) {
+		const radians = angle / Radians2Degrees;
+		const cosine = Math.cos(radians);
+		const sinus = Math.sin(radians);
 		return new LMat4([1, 0, 0, 0,
 						  0, cosine, -sinus, 0,
 						  0, sinus, cosine, 0,
@@ -612,12 +576,10 @@ export class LMat4 {
 			]);
 	}
 	
-	// angle: number
-	// return: LMat4
-	static rotateY(angle) {
-		angle *= 0.0174533;
-		var cosine = Math.cos(angle);
-		var sinus = Math.sin(angle);
+	static rotateY(angle: number) {
+		const radians = angle / Radians2Degrees;
+		const cosine = Math.cos(radians);
+		const sinus = Math.sin(radians);
 		return new LMat4([cosine, 0, sinus, 0,
 						  0, 1, 0, 0,
 						  -sinus, 0, cosine, 0,
@@ -625,12 +587,10 @@ export class LMat4 {
 			]);
 	}
 	
-	// angle: number
-	// return: LMat4
-	static rotateZ(angle) {
-		const rad = angle * 0.0174533;
-		var cosine = Math.cos(rad);
-		var sinus = Math.sin(rad);
+	static rotateZ(angle: number) {
+		const radians = angle / Radians2Degrees;
+		const cosine = Math.cos(radians);
+		const sinus = Math.sin(radians);
 		return new LMat4([cosine, -sinus, 0, 0,
 						  sinus, cosine, 0, 0,
 						  0, 0, 1, 0,
@@ -638,12 +598,10 @@ export class LMat4 {
 			]);
 	}
 	
-	// return: LMat4
 	static zero() {
 		return new LMat4();
 	}
 	
-	// return: LMat4
 	static identity() {
 		return new LMat4([1, 0, 0, 0,
 						  0, 1, 0, 0,
@@ -651,11 +609,7 @@ export class LMat4 {
 						  0, 0, 0, 1]);
 	}
 
-	/**
-	 * @param {Array<LMat4>} mats 
-	 * @returns {LMat4}
-	 */
-	static buildMatrix(mats = []) {
+	static buildMatrix(mats: LMat4[] = []) {
 		return mats.reduce((p,c) => p.mult(c), LMat4.identity());
 	}
 
@@ -668,30 +622,24 @@ export class LMat4 {
  * @param {T extends LMat4 | LMat3} mat 
  * @returns {T}
  */
-function invertSquareMatrix(mat) {
+function invertSquareMatrix<T extends LMat3 | LMat4>(mat: T): T {
     const arr = mat.arr;
     const N = Math.floor(Math.sqrt(arr.length));
-    const getV = (arr, r, c) => {
+    const getV = (arr: number[], r: number, c: number) => {
         return arr[r * N + c];
     };
-    const setV = (arr, r, c, v) => {
+    const setV = (arr: number[], r: number, c: number, v: number) => {
         arr[r * N + c] = v;
     };
     const makeArr = () => Array.from({ length: N * N }, () => 0);
 
     /**
      * @desc Function to get cofactor of A[p][q] in temp[][]. n is current dimension of A[][] 
-     * @param {Array<number>} A 
-     * @param {number} p 
-     * @param {number} q 
-     * @param {number} n 
-     * @returns {Array<number>}
      */
-    const getCofactor = (A, p, q, n) => { 
+    const getCofactor = (A: number[], p: number, q: number, n: number): number[] => { 
         let i = 0;
         let j = 0; 
         let temp = makeArr();
-        // console.log('nnnnnn', n)
     
         // Looping for each element of the matrix 
         for (let row = 0; row < n; row++) { 
@@ -716,11 +664,8 @@ function invertSquareMatrix(mat) {
     } 
     /**
      * @desc Recursive function for finding determinant of matrix. n is current dimension of A[][].
-     * @param {Array<number>} A 
-     * @param {number} n 
-     * @returns {number}
      */
-    const getDeterminant = (A, n) => { 
+    const getDeterminant = (A: number[], n: number): number => { 
         let D = 0; // Initialize result 
     
         //  Base case : if matrix contains single element 
@@ -747,10 +692,8 @@ function invertSquareMatrix(mat) {
     } 
     /**
      * @desc Function to get adjoint of A[N][N] in adj[N][N]. 
-     * @param {Array<number>} A 
-     * @returns {Array<number>}
      */
-    const adjoint = (A) => { 
+    const adjoint = (A: number[]): number[] => { 
         const adj = makeArr();
         // console.log('from make', adj)
         if (N === 1) { 
@@ -761,8 +704,8 @@ function invertSquareMatrix(mat) {
         // temp is used to store cofactors of A[][] 
         let sign = 1;
     
-        for (let i=0; i<N; i++) { 
-            for (let j=0; j<N; j++) { 
+        for (let i = 0; i < N; i++) { 
+            for (let j = 0; j < N; j++) { 
                 // Get cofactor of A[i][j] 
                 const temp = getCofactor(A, i, j, N); 
                 // console.log(temp)
@@ -783,10 +726,8 @@ function invertSquareMatrix(mat) {
     } 
     /**
      * @desc Function to calculate and store inverse, returns false if matrix is singular 
-     * @param {Array<number>} A
-     * @returns {Array<number>} 
      */
-    const getInverse = (A) => {
+    const getInverse = (A: number[]): number[] => {
         let inverseArr = makeArr();
         // Find determinant of A[][] 
         let det = getDeterminant(A, N); // number
@@ -811,6 +752,6 @@ function invertSquareMatrix(mat) {
         return inverseArr; 
     } 
     return N === 4
-        ? new LMat4(getInverse(mat.arr))
-        : new LMat3(getInverse(mat.arr));
+        ? new LMat4(getInverse(mat.arr)) as T
+        : new LMat3(getInverse(mat.arr)) as T;
 }
