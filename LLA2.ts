@@ -1,119 +1,91 @@
 
-const CONSTANTS = {
-	rad2deg: 57.295779513082320,
-};
+export const Radians2Degrees = 180 / Math.PI;
 
 export class LV2 {
-	// x: number
-	// y: number
-	constructor(x, y) {
+	x: number;
+	y: number;
+
+	constructor(x: number, y: number) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	// return: string
-	// eg. [1,2]
 	toString() {
-		return '[' + this.x + ',' + this.y + ']';
+		return `[${this.x}, ${this.y}]`;
 	}
 
-	// return: LV2
 	copy() {
 		return new LV2(this.x, this.y);
 	}
 	
-	// o: { x, y }
-	setAs(o) {
+	setAs(o: LV2) {
 		this.x = o.x;
 		this.y = o.y;
 	}
 
-	// x: number
-	// y: number
-	setValues(x, y) {
+	setValues(x: number, y: number) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	// o: { x: number, y: number }
-	// return: LV2
-	add(o) {
+	add(o: LV2) {
 		return new LV2(this.x + o.x, this.y + o.y);
 	}
 	
-	// o: { x: number, y: number }
-	iadd(o) {
+	iadd(o: LV2) {
 		this.x += o.x;
 		this.y += o.y;
 	}
 	
-	// o: { x: number, y: number }
-	// return: LV2
-	sub(o) {
+	sub(o: LV2) {
 		return new LV2(this.x - o.x, this.y - o.y);
 	}
 	
-	// o: { x: number, y: number }
-	isub(o) {
+	isub(o: LV2) {
 		this.x -= o.x;
 		this.y -= o.y;
 	}
 	
-	// s: number
-	// return: LV2
-	scale(s) {
+	scale(s: number) {
 		return new LV2(this.x * s, this.y * s);
 	}
 
-	// s: number
-	// return: LV2
-	scaleXY(sx, sy) {
+	scaleXY(sx: number, sy: number) {
 		return new LV2(this.x * sx, this.y * sy);
 	}
 
-	// s: number
-	iscale(s) {
+	iscale(s: number) {
 		this.x *= s;
 		this.y *= s;
 	}
 	
-	// s: number
-	// return: LV2
-	div(s) {
+	div(s: number) {
 		return new LV2(this.x / s, this.y / s);
 	}
 	
-	// s: number
-	idiv(s) {
+	idiv(s: number) {
 		this.x /= s;
 		this.y /= s;
 	}
 	
-	// o: { x: number, y: number }
-	// return: number
-	dot(o) {
+	dot(o: LV2) {
 		return this.x * o.x + this.y * o.y;
 	}
 	
-	// o: { x: number, y: number }
-	// return: number
-	dist(o) {
+	dist(o: LV2) {
 		var dx = this.x - o.x;
 		var dy = this.y - o.y;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
-	// return: number
 	mag() {
 		return Math.sqrt(this.x * this.x + this.y * this.y);
 	}
 	
-	// return: LV2
 	round() {
 		return new LV2(Math.round(this.x), Math.round(this.y));
 	}
 	
-	// return: LV2
 	floor() {
 		return new LV2(Math.floor(this.x), Math.floor(this.y));
 	}
@@ -128,7 +100,6 @@ export class LV2 {
 		this.y = Math.floor(this.y);
 	}
 	
-	// return: LV2
 	unit() {
 		var m = Math.sqrt(this.x * this.x + this.y * this.y);
 		return new LV2(this.x / m, this.y / m);	
@@ -140,10 +111,7 @@ export class LV2 {
 		this.y /= m;
 	}
 	
-	// target: LV2
-	// time: number [0-1]
-	// return: LV2
-	interpolateTo(target, time) {
+	interpolateTo(target: LV2, time: number) {
 		var to = target.copy();
 		to.isub(this);
 		to.iscale(time);
@@ -151,21 +119,18 @@ export class LV2 {
 		return to;
 	}
 
-	// return: number
 	getAngle() {
-		var angle = CONSTANTS.rad2deg * Math.atan(this.y / this.x);
+		let angle = Radians2Degrees * Math.atan(this.y / this.x);
 		if(this.x < 0.0)
 			angle += 180.0;
-		else if(y < 0.0)
+		else if(this.y < 0.0)
 			angle += 360.0;
 		return angle;
 	}
 	
-	// angle: number
-	// return: LV2
-	static fromAngle(angle) {
-		var rv = new LV2(0,0);
-		angle /= CONSTANTS.rad2deg;
+	static fromAngle(angle: number) {
+		const rv = new LV2(0, 0);
+		angle /= Radians2Degrees;
 		rv.x = Math.cos(angle);
 		rv.y = Math.sin(angle);
 		return rv;
@@ -173,18 +138,17 @@ export class LV2 {
 }
 
 export class LV3 {
-	// x: number
-	// y: number
-	// z: number
-	constructor(x, y, z) {
+	x: number;
+	y: number;
+	z: number;
+	constructor(x: number, y: number, z: number) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	// return: string
 	toString() {
-		return '[' + this.x + ',' + this.y + ',' + this.z + ']';
+		return `${this.x},${this.y},${this.z}`;
 	}
 
 	// return: LV3

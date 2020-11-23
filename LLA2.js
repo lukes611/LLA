@@ -1,74 +1,50 @@
-var CONSTANTS = {
-    rad2deg: 57.295779513082320
-};
+export var Radians2Degrees = 180 / Math.PI;
 var LV2 = /** @class */ (function () {
-    // x: number
-    // y: number
     function LV2(x, y) {
         this.x = x;
         this.y = y;
     }
-    // return: string
-    // eg. [1,2]
     LV2.prototype.toString = function () {
-        return '[' + this.x + ',' + this.y + ']';
+        return "[" + this.x + ", " + this.y + "]";
     };
-    // return: LV2
     LV2.prototype.copy = function () {
         return new LV2(this.x, this.y);
     };
-    // o: { x, y }
     LV2.prototype.setAs = function (o) {
         this.x = o.x;
         this.y = o.y;
     };
-    // x: number
-    // y: number
     LV2.prototype.setValues = function (x, y) {
         this.x = x;
         this.y = y;
     };
-    // o: { x: number, y: number }
-    // return: LV2
     LV2.prototype.add = function (o) {
         return new LV2(this.x + o.x, this.y + o.y);
     };
-    // o: { x: number, y: number }
     LV2.prototype.iadd = function (o) {
         this.x += o.x;
         this.y += o.y;
     };
-    // o: { x: number, y: number }
-    // return: LV2
     LV2.prototype.sub = function (o) {
         return new LV2(this.x - o.x, this.y - o.y);
     };
-    // o: { x: number, y: number }
     LV2.prototype.isub = function (o) {
         this.x -= o.x;
         this.y -= o.y;
     };
-    // s: number
-    // return: LV2
     LV2.prototype.scale = function (s) {
         return new LV2(this.x * s, this.y * s);
     };
-    // s: number
-    // return: LV2
     LV2.prototype.scaleXY = function (sx, sy) {
         return new LV2(this.x * sx, this.y * sy);
     };
-    // s: number
     LV2.prototype.iscale = function (s) {
         this.x *= s;
         this.y *= s;
     };
-    // s: number
-    // return: LV2
     LV2.prototype.div = function (s) {
         return new LV2(this.x / s, this.y / s);
     };
-    // s: number
     LV2.prototype.idiv = function (s) {
         this.x /= s;
         this.y /= s;
