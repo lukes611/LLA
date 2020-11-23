@@ -358,8 +358,8 @@ export class LMat3 {
 					   p.x * this.arr[6] + p.y * this.arr[7] + p.z * this.arr[8]);
 	}
 
-	inv() {
-		return invertSquareMatrix(this);
+	inv(): LMat3 {
+		return invertSquareMatrix<LMat3>(this);
 	}
 
 	static zero() {
@@ -540,8 +540,8 @@ export class LMat4 {
 					   p.x * this.arr[8] + p.y * this.arr[9] + p.z * this.arr[10] + this.arr[11] * w);
 	}
 
-	inv() {
-		return invertSquareMatrix(this);
+	inv(): LMat4 {
+		return invertSquareMatrix<LMat4>(this);
 	}
 	
 	static scale(scalar: number) {

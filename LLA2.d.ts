@@ -71,7 +71,7 @@ export declare class LMat3 {
     mult(m: LMat3): LMat3;
     multLV2(p: LV2): LV2;
     multLV3(p: LV3): LV3;
-    inv(): this;
+    inv(): LMat3;
     static zero(): LMat3;
     static identity(): LMat3;
     static scale(scalar: number): LMat3;
@@ -94,7 +94,7 @@ export declare class LMat4 {
     imult(m: LMat4): void;
     mult(m: LMat4): LMat4;
     multLV3(p: LV3, w?: number): LV3;
-    inv(): this;
+    inv(): LMat4;
     static scale(scalar: number): LMat4;
     static scaleXYZ(xs: number, ys: number, zs: number): LMat4;
     static trans(x: number, y: number, z: number): LMat4;
