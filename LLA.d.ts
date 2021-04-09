@@ -17,6 +17,10 @@ export declare class LV2 {
     div(s: number): LV2;
     idiv(s: number): void;
     dot(o: LV2): number;
+    proj(onto: LV2): {
+        scalar: number;
+        projection: LV2;
+    };
     dist(o: LV2): number;
     mag(): number;
     round(): LV2;
@@ -28,6 +32,11 @@ export declare class LV2 {
     interpolateTo(target: LV2, time: number): LV2;
     getAngle(): number;
     static fromAngle(angle: number): LV2;
+    toJSON(): {
+        x: number;
+        y: number;
+    };
+    static fromJSON(obj: any): LV2;
 }
 export declare class LV3 {
     x: number;
@@ -47,6 +56,10 @@ export declare class LV3 {
     div(s: number): LV3;
     idiv(s: number): void;
     dot(o: LV3): number;
+    proj(onto: LV3): {
+        scalar: number;
+        projection: LV3;
+    };
     cross(o: LV3): LV3;
     icross(o: LV3): void;
     dist(o: LV3): number;
@@ -57,6 +70,12 @@ export declare class LV3 {
     ifloor(): void;
     unit(): LV3;
     iunit(): void;
+    toJSON(): {
+        x: number;
+        y: number;
+        z: number;
+    };
+    static fromJSON(obj: LV3): LV3;
 }
 export declare class LMat3 {
     arr: number[];

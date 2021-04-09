@@ -52,6 +52,11 @@ export class LV2 {
     dot(o) {
         return this.x * o.x + this.y * o.y;
     }
+    proj(onto) {
+        const ontoUnit = onto.unit();
+        const scalar = this.dot(ontoUnit);
+        return { scalar, projection: ontoUnit.scale(scalar) };
+    }
     dist(o) {
         var dx = this.x - o.x;
         var dy = this.y - o.y;
@@ -104,6 +109,12 @@ export class LV2 {
         rv.x = Math.cos(angle);
         rv.y = Math.sin(angle);
         return rv;
+    }
+    toJSON() {
+        return { x: this.x, y: this.y };
+    }
+    static fromJSON(obj) {
+        return new LV2(obj.x, obj.y);
     }
 }
 export class LV3 {
@@ -163,6 +174,11 @@ export class LV3 {
     dot(o) {
         return this.x * o.x + this.y * o.y + this.z * o.z;
     }
+    proj(onto) {
+        const ontoUnit = onto.unit();
+        const scalar = this.dot(ontoUnit);
+        return { scalar, projection: ontoUnit.scale(scalar) };
+    }
     cross(o) {
         return new LV3(this.y * o.z - this.z * o.y, this.z * o.x - this.x * o.z, this.x * o.y - this.y * o.x);
     }
@@ -208,6 +224,12 @@ export class LV3 {
         this.x /= m;
         this.y /= m;
         this.z /= m;
+    }
+    toJSON() {
+        return { x: this.x, y: this.y, z: this.z };
+    }
+    static fromJSON(obj) {
+        return new LV3(obj.x, obj.y, obj.z);
     }
 }
 export class LMat3 {
