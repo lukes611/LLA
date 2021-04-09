@@ -94,6 +94,7 @@ export declare class LMat3 {
     static zero(): LMat3;
     static identity(): LMat3;
     static scale(scalar: number): LMat3;
+    static scaleXY(xs: number, ys: number): LMat3;
     static trans(x: number, y: number): LMat3;
     static rotate(angle: number): LMat3;
     static rotateX(angle: number): LMat3;

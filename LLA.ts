@@ -408,6 +408,14 @@ export class LMat3 {
 		]);
 	}
 
+	static scaleXY(xs: number, ys: number) {
+		return new LMat3([
+			xs, 0, 0,
+			0, ys, 0,
+			0, 0, 1,
+		]);
+	}
+
 	static trans(x: number, y: number) {
 		return new LMat3([
 			1, 0, x,

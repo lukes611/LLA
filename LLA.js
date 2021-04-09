@@ -313,6 +313,13 @@ export class LMat3 {
             0, 0, 1,
         ]);
     }
+    static scaleXY(xs, ys) {
+        return new LMat3([
+            xs, 0, 0,
+            0, ys, 0,
+            0, 0, 1,
+        ]);
+    }
     static trans(x, y) {
         return new LMat3([
             1, 0, x,
